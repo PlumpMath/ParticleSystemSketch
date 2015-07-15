@@ -19,7 +19,6 @@ void ofApp::setup(){
     #endif
     
     /*-----------------Vars setup --------------------------*/
-    //particles
     currentMode = SNOW;
     force.set(0, 0.2, 0);
     bg_color = ofColor(0,55,110);
@@ -29,17 +28,13 @@ void ofApp::setup(){
     
     /*---------------- initialize origin---------------- */
     system.setup(ofVec3f(0, 0, 300), 100);
+
     /* --------------- Intializa GUI --------------------*/
     createGui();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-//    for (ParticleSystem system : systems){
-//        system.setMode(currentMode);
-//        system.update(force);
-//    }
-    
     switch (currentMode) {
         case NOISE:
             system.updateNoise(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);

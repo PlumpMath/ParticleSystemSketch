@@ -11,28 +11,22 @@ public:
                 float noiseReadTime, float timeDelta, float timeFrequency,
                 float noiseMagnitude, float oldVelAmount);
     void updateSnow(float time);
-    void updatePositionHistory();
+    ofVec3f getNoise( ofVec3f _noisePos, float _time );
 
-    void resetForces();
     
-    float drag;
-    float uniqueVal;
-    float scale;
-    
-    int dimension;
-    float maxAge;
-    float age;
+    float drag, uniqueVal, scale, maxAge, age;
+    int dimension, tailLength;
     bool is_alive;
     
-    ofColor color;
     deque<ofVec3f> tail;
-    int tailLength;
+    ofColor color;
     ofVec3f startingPos, pos, vel, acc, force;
-    ofVec3f getNoise( ofVec3f _noisePos, float _time );
-    
+
 private:
     void applyForce(ofVec3f _force);
     void repositionAtTheTop();
+    void updatePositionHistory();
+    void resetForces();
 
 };
 
