@@ -1,9 +1,9 @@
 #include "Particle.h"
 
-Particle::Particle(ofVec3f _starting_pos) {
-    max_age = 55;
+Particle::Particle(ofVec3f _startingPos) {
+    maxAge = 55;
     age = ofRandom(255);
-    tail_length = 10;
+    tailLength = 10;
     is_alive = true;
 }
 
@@ -28,10 +28,9 @@ void Particle::setup(){
 
 }
 
-void Particle::update(float noiseRandomOffset, float spaceFrequency,
+void Particle::updateNoise(float noiseRandomOffset, float spaceFrequency,
                       float noiseReadTime, float timeDelta, float timeFrequency,
                       float noiseMagnitude,float oldVelAmount){
-    //tail_length = 20;
     ofVec3f noiseReadPos = (pos + noiseRandomOffset ) * spaceFrequency;
     vel = (getNoise( noiseReadPos, noiseReadTime ) * noiseMagnitude).getInterpolated( vel, oldVelAmount );
     
@@ -45,6 +44,7 @@ void Particle::update(float noiseRandomOffset, float spaceFrequency,
 
 void Particle::updateSnow(float time){
     vel.z = 0;
+    //why?
     vel.x = ofSignedNoise(uniqueVal);
     age += time;
     resetForces();
@@ -65,17 +65,16 @@ void Particle::applyForce(ofVec3f _force) {
 }
 
 void Particle::repositionAtTheTop(){
-    if( pos.y < -(ofGetHeight() /2) ){
+    if( pos.y < -(ofGetHeight() / 2) ){
         tail.clear();
         vel.y = ofRandom(-3.9, 3.9);
-        pos.y  = ofGetHeight() /2;
-        
+        pos.y  = ofGetHeight() / 2;
     }
 }
 
 void Particle::updatePositionHistory() {
     tail.push_front(pos);
-    while( tail.size() > tail_length ) { tail.pop_back(); }
+    while( tail.size() > tailLength ) { tail.pop_back(); }
 }
 
 

@@ -4,21 +4,21 @@ ParticleSystem::ParticleSystem(){
 
 }
 
-void ParticleSystem::setup(ofVec3f _pos, int _n_particles){
+void ParticleSystem::setup(ofVec3f _pos, int _nParticles){
     pos = _pos;
-    n_particles = _n_particles;    
+    nParticles = _nParticles;
     
-    for (int i = 0; i < n_particles; i++) {
+    for (int i = 0; i < nParticles; i++) {
         Particle particle(pos);
         particle.setup();
-        particle.age = ofRandom(particle.max_age);
+        particle.age = ofRandom(particle.maxAge);
         particles.push_back(particle);
         
     }
 }
 
 //--------------------------------------------------------------
-void ParticleSystem::update(ofVec3f _force,
+void ParticleSystem::updateNoise(ofVec3f _force,
                             float noiseRandomOffset,
                             float spaceFrequency,
                             float timeFrequency,
@@ -28,12 +28,13 @@ void ParticleSystem::update(ofVec3f _force,
     float time = ofGetElapsedTimef();
     float noiseReadTime = time * timeFrequency;
     float timeDelta = 1.0 / 60.0;
+
     for (int i = 0; i < particles.size(); i++) {
         Particle* p = &particles.at(i);
-        if (p->age > p->max_age) {
+        if (p->age > p->maxAge) {
             p->setup();
         }
-        p->update(noiseRandomOffset, spaceFrequency,
+        p->updateNoise(noiseRandomOffset, spaceFrequency,
                   noiseReadTime, timeDelta, timeFrequency,
                   noiseMagnitude, oldVelAmount);
     }
@@ -43,9 +44,6 @@ void ParticleSystem::updateSnow(){
     float time = ofGetElapsedTimef();
     for (int i = 0; i < particles.size(); i++) {
         Particle* p = &particles.at(i);
-//        if (p->age > p->max_age) {
-//            p->setup();
-//        }
         p->updateSnow(time);
     }
 }
@@ -54,6 +52,8 @@ void ParticleSystem::updateSnow(){
 void ParticleSystem::draw(){
     float time = ofGetElapsedTimef() * 0.1;
     ofMesh mesh;
+    //prova a cambiare i modes
+    //OF_PRIMITIVE_TRIANGLES, OF_PRIMITIVE_TRIANGLE_STRIP, OF_PRIMITIVE_TRIANGLE_FAN, OF_PRIMITIVE_LINES, OF_PRIMITIVE_LINE_STRIP, OF_PRIMITIVE_LINE_LOOP, OF_PRIMITIVE_POINTS
     mesh.setMode( OF_PRIMITIVE_LINES );
     ofMesh* pointer_mesh = &mesh;
 
@@ -79,12 +79,5 @@ void ParticleSystem::addParticleToMesh(Particle *p, ofMesh *mesh){
         }
     }
     
-}
-
-
-void ParticleSystem::resetForces(){
-    for (Particle p : particles){
-        p.resetForces();
-    }
 }
 

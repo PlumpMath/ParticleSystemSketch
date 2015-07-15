@@ -39,7 +39,7 @@ class ofApp : public ofBaseApp{
     //bool isResetPos;
     
     //da sostituire con i modes
-    char selected_force;
+    char selectedForce;
     particleMode currentMode;
     string currentModeStr;
     ParticleSystem system;
@@ -52,5 +52,8 @@ class ofApp : public ofBaseApp{
     float		timeFrequency;
     float		oldVelAmount;
     float       maxVel;
+    
+private:
+    void createGui();
 		
 };
