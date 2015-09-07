@@ -21,10 +21,9 @@ void ofApp::setup(){
     /*-----------------Vars setup --------------------------*/
     currentMode = SNOW;
     force.set(0, 0.2, 0);
-    bg_color = ofColor(0,55,110);
+    //bg_color = ofColor(0,55,110);
     noiseMagnitude = 0.8;
     timeFrequency = 0.5;
-    ofBackground(bg_color);
     
     /*---------------- initialize origin---------------- */
     system.setup(ofVec3f(0, 0, 300), 10000);
@@ -37,17 +36,25 @@ void ofApp::setup(){
 void ofApp::update(){
     switch (currentMode) {
         case NOISE:
+            blueChannel = 1.0;
+            ofBackground(ofColor(240,200,0));
             system.updateNoise(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);
             break;
         case SNOW:
+            blueChannel = 0.8;
+            ofBackground(ofColor(0,55,110));
             system.updateSnow();
             break;
         case TRIGO:
+            blueChannel = 0.2;
+            ofBackground(ofColor(144,150,255));
             system.updateTrigo();
             break;
             
         default:
             return 1;
+            blueChannel = 1.0;
+            ofBackground(ofColor(240,200,0));
             system.updateNoise(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);
             break;
     }
@@ -58,6 +65,7 @@ void ofApp::draw(){
     ofEnableDepthTest();
         camera.begin();
             shader.begin();
+                shader.setUniform1f("blu", blueChannel);
                 system.draw();
             shader.end();
         camera.end();

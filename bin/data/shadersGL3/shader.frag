@@ -1,6 +1,7 @@
 #version 150
 
 out vec4 outputColor;
+uniform float blu;
 
 void main()
 {
@@ -14,7 +15,7 @@ void main()
     
     float r = gl_FragCoord.x / windowWidth;
     float g = gl_FragCoord.y / windowHeight;
-    float b = 1.0;
+    float b = blu;
     float a = 1.0;
     outputColor = vec4(r, g, b, a);
 }

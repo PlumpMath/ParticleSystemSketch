@@ -24,7 +24,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-    ofColor bg_color;
+    float blueChannel;
     ofShader shader;
     
     //Camera
