@@ -30,25 +30,25 @@ void Particle::setup(){
 
 }
 
-void Particle::updateNoise(float noiseRandomOffset, float spaceFrequency,
-                      float noiseReadTime, float timeDelta, float timeFrequency,
-                      float noiseMagnitude,float oldVelAmount){
-    ofVec3f noiseReadPos = (pos + noiseRandomOffset ) * spaceFrequency;
-    vel = (getNoise( noiseReadPos, noiseReadTime ) * noiseMagnitude).getInterpolated( vel, oldVelAmount );
+void Particle::updateNoise(float _noiseRandomOffset, float _spaceFrequency,
+                      float _noiseReadTime, float _timeDelta, float _timeFrequency,
+                      float _noiseMagnitude,float _oldVelAmount){
+    ofVec3f noiseReadPos = (pos + _noiseRandomOffset ) * _spaceFrequency;
+    vel = (getNoise( noiseReadPos, _noiseReadTime ) * _noiseMagnitude).getInterpolated( vel, _oldVelAmount );
     
     pos += vel;
     vel *= drag;
     
-    age += timeDelta;
+    age += _timeDelta;
     updatePositionHistory();
     
 }
 
-void Particle::updateSnow(float time){
+void Particle::updateSnow(float _time){
     vel.z = 0;
     //vel x give a little bit of windy effect
     vel.x = ofSignedNoise(uniqueVal) * 2;
-    age += time;
+    age += _time;
     resetForces();
     force = ofVec3f(0.0, -0.1, 0.0);
     applyForce(force);
@@ -56,8 +56,8 @@ void Particle::updateSnow(float time){
     repositionAtTheTop();
 }
 
-void Particle::updateTrigo(float time){
-    age += time;
+void Particle::updateTrigo(float _time){
+    age += _time;
     resetForces();
 
     angularAccelleration = ofSignedNoise(uniqueVal);
