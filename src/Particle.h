@@ -11,12 +11,16 @@ public:
                 float noiseReadTime, float timeDelta, float timeFrequency,
                 float noiseMagnitude, float oldVelAmount);
     void updateSnow(float time);
+    void updateTrigo(float time);
     ofVec3f getNoise( ofVec3f _noisePos, float _time );
-
     
     float drag, uniqueVal, scale, maxAge, age;
-    int dimension, tailLength;
+    int dimension, tailLength, maxTailLength;
     bool is_alive;
+    
+    float angle;
+    float angularAccelleration;
+    float angularVelocity;
     
     deque<ofVec3f> tail;
     ofColor color;

@@ -27,7 +27,7 @@ void ofApp::setup(){
     ofBackground(bg_color);
     
     /*---------------- initialize origin---------------- */
-    system.setup(ofVec3f(0, 0, 300), 100);
+    system.setup(ofVec3f(0, 0, 300), 10000);
 
     /* --------------- Intializa GUI --------------------*/
     createGui();
@@ -42,10 +42,13 @@ void ofApp::update(){
         case SNOW:
             system.updateSnow();
             break;
+        case TRIGO:
+            system.updateTrigo();
+            break;
             
         default:
             return 1;
-            //system.update(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);
+            system.updateNoise(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);
             break;
     }
 }
@@ -62,7 +65,6 @@ void ofApp::draw(){
     
     ofEnableBlendMode( OF_BLENDMODE_ALPHA );
     ofSetColor(230);
-    ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 300, 20);
 }
 
 void ofApp::screenshot(){
@@ -77,15 +79,13 @@ void ofApp::keyPressed(int key){
     switch (key) {
         case '1':
             currentMode = NOISE;
-            currentModeStr = "1 NOISE";
             break;
         case '2':
             currentMode = TRIGO;
-            currentModeStr = "2 Trigo";
             break;
         case '3':
             currentMode = SNOW;
-            currentModeStr = "3 SNOW";
+             system.setupSnow();
             break;
         case 'f':
             ofToggleFullscreen();
@@ -93,13 +93,12 @@ void ofApp::keyPressed(int key){
             
         case 'g':
             gui->toggleVisible();
+            
             break;
             
         case 'p':
             draw_padding = !draw_padding;
             gui->setDrawWidgetPadding(draw_padding);
-            //            gui->setDrawPadding(drawPadding);
-            //            gui->setDrawWidgetPaddingOutline(drawPadding);
             break;
 
         case ' ':
@@ -123,7 +122,7 @@ void ofApp::createGui(){
     gui->addTextArea("TEXT AREA", "f: Toggle Fullscreen", OFX_UI_FONT_SMALL);
     gui->addTextArea("TEXT AREA", "g: Hide/show the GUI panel.", OFX_UI_FONT_SMALL);
     gui->addTextArea("TEXT AREA", "<space>: Take Screenshot", OFX_UI_FONT_SMALL);
-    gui->addTextArea("TEXT AREA", "<1>, <2> to change the force applied to the particles", OFX_UI_FONT_SMALL);
+    gui->addTextArea("TEXT AREA", "Keys 1-4 to change mode.", OFX_UI_FONT_SMALL);
     gui->addSpacer();
     gui->addSlider("ZOOM", 50.00, 1000.00, zoom);
     gui->addSpacer();

@@ -36,12 +36,9 @@ class ofApp : public ofBaseApp{
     void guiEvent(ofxUIEventArgs &e);
     bool draw_padding;
     ofVec3f emitter;
-    //bool isResetPos;
     
-    //da sostituire con i modes
     char selectedForce;
     particleMode currentMode;
-    string currentModeStr;
     ParticleSystem system;
     ofVec3f force;
     

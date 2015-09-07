@@ -1,14 +1,16 @@
 #include "Particle.h"
 
 Particle::Particle(ofVec3f _startingPos) {
+    maxTailLength = 8;
     maxAge = 55;
-    age = ofRandom(255);
-    tailLength = 10;
+    age = ofRandom(maxAge);
+    tailLength = maxTailLength;
     is_alive = true;
 }
 
 void Particle::setup(){
     //the unique val allows us to set properties slightly differently for each particle
+    tailLength = maxTailLength;
     uniqueVal = ofRandom(-10000, 10000);
     
     pos.x = ofRandom(-400, 400);
@@ -18,13 +20,13 @@ void Particle::setup(){
     vel.x = ofRandom(-3.9, 3.9);
     vel.y = ofRandom(-3.9, 3.9);
     vel.z = ofRandom(-3.9, 3.9);
-    //vel.z = 0;
     
     force   = ofVec3f(0,0,0);
     scale = ofRandom(0.5, 1.0);
     drag  = ofRandom(0.97, 0.99);
     age = 0;
     tail.clear();
+    angle = ofMap(uniqueVal, -10000.0, 10000.0, 0.0, 360.0);
 
 }
 
@@ -44,17 +46,31 @@ void Particle::updateNoise(float noiseRandomOffset, float spaceFrequency,
 
 void Particle::updateSnow(float time){
     vel.z = 0;
-    //why?
-    vel.x = ofSignedNoise(uniqueVal);
+    //vel x give a little bit of windy effect
+    vel.x = ofSignedNoise(uniqueVal) * 2;
     age += time;
     resetForces();
-    force = ofVec3f(0.0, -0.9, 0.0);
+    force = ofVec3f(0.0, -0.1, 0.0);
     applyForce(force);
     updatePositionHistory();
     repositionAtTheTop();
 }
 
+void Particle::updateTrigo(float time){
+    age += time;
+    resetForces();
+
+    angularAccelleration = ofSignedNoise(uniqueVal);
+    angle += angularVelocity;
+    angularVelocity += angularAccelleration;
+    pos.x += cos(angle);
+    pos.y += sin(angle);
+    pos.z += sin(angle);
+    updatePositionHistory();
+}
+
 void Particle::resetForces() {
+    angularAccelleration *= 0;
     acc *= 0;
 }
 
@@ -66,14 +82,17 @@ void Particle::applyForce(ofVec3f _force) {
 
 void Particle::repositionAtTheTop(){
     if( pos.y < -(ofGetHeight() / 2) ){
+        pos.y = ofGetHeight() / 2;
+        age = ofRandom(maxAge);
         tail.clear();
         vel.y = ofRandom(-3.9, 3.9);
-        pos.y  = ofGetHeight() / 2;
     }
 }
 
 void Particle::updatePositionHistory() {
+    //cout << tail.size()<< endl;
     tail.push_front(pos);
+    //cout << tail.size()<< endl;
     while( tail.size() > tailLength ) { tail.pop_back(); }
 }
 
