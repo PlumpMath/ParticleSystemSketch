@@ -17,10 +17,11 @@ void ParticleSystem::setup(ofVec3f _pos, int _nParticles){
 }
 void ParticleSystem::setupSnow(){
     int height = ofGetHeight();
+    int width = ofGetWidth();
     for(unsigned int i = 0; i < particles.size(); i++){
         Particle* p = &particles.at(i);
         p->tail.clear();
-        p->pos.x = ofRandom(-800, 800);
+        p->pos.x = ofRandom(-(width / 2), (width / 2));
         p->pos.y = ofRandom(-(height / 2), (height / 2));
     }
 }
