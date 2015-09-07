@@ -36,7 +36,7 @@ void ofApp::update(){
     switch (currentMode) {
         case NOISE:
             blueChannel = 1.0;
-            ofBackground(ofColor(240,200,0));
+            ofBackground(ofColor(240,160,0));
             system.updateNoise(force, randomOffset, spaceFrequency, timeFrequency, noiseMagnitude, oldVelAmount);
             break;
         case SNOW:
@@ -45,11 +45,10 @@ void ofApp::update(){
             system.updateSnow();
             break;
         case TRIGO:
-            blueChannel = 0.2;
-            ofBackground(ofColor(144,150,255));
+            blueChannel = 0.6;
+            ofBackground(ofColor(170,212,144));
             system.updateTrigo();
             break;
-            
         default:
             return 1;
             blueChannel = 1.0;
