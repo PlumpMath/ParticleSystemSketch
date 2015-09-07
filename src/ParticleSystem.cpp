@@ -68,7 +68,6 @@ void ParticleSystem::updateTrigo(){
 }
 
 void ParticleSystem::draw(){
-    float time = ofGetElapsedTimef() * 0.1;
     ofMesh mesh;
     mesh.setMode( OF_PRIMITIVE_LINES );
     ofMesh* pointer_mesh = &mesh;
