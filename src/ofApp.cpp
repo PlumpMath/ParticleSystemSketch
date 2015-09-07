@@ -21,7 +21,6 @@ void ofApp::setup(){
     /*-----------------Vars setup --------------------------*/
     currentMode = SNOW;
     force.set(0, 0.2, 0);
-    //bg_color = ofColor(0,55,110);
     noiseMagnitude = 0.8;
     timeFrequency = 0.5;
     
@@ -88,25 +87,22 @@ void ofApp::keyPressed(int key){
         case '1':
             currentMode = NOISE;
             break;
+
         case '2':
             currentMode = TRIGO;
             break;
+
         case '3':
             currentMode = SNOW;
              system.setupSnow();
             break;
+
         case 'f':
             ofToggleFullscreen();
             break;
-            
+
         case 'g':
             gui->toggleVisible();
-            
-            break;
-            
-        case 'p':
-            draw_padding = !draw_padding;
-            gui->setDrawWidgetPadding(draw_padding);
             break;
 
         case ' ':
