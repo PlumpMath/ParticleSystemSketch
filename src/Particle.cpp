@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 Particle::Particle(ofVec3f _startingPos) {
-    maxTailLength = 8;
+    maxTailLength = 15;
     maxAge = 55;
     age = ofRandom(maxAge);
     tailLength = maxTailLength;
