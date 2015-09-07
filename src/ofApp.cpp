@@ -63,7 +63,7 @@ void ofApp::draw(){
     ofEnableDepthTest();
         camera.begin();
             shader.begin();
-                shader.setUniform1f("blu", blueChannel);
+                shader.setUniform1f("blue", blueChannel);
                 system.draw();
             shader.end();
         camera.end();
