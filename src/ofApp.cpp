@@ -93,7 +93,7 @@ void ofApp::keyPressed(int key){
 
         case '3':
             currentMode = SNOW;
-             system.setupSnow();
+            system.setupSnow();
             break;
 
         case 'f':
