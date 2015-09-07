@@ -34,8 +34,6 @@ class ofApp : public ofBaseApp{
     //----GUI variables-------
     ofxUISuperCanvas *gui;
     void guiEvent(ofxUIEventArgs &e);
-    bool draw_padding;
-    ofVec3f emitter;
     
     char selectedForce;
     particleMode currentMode;
