@@ -70,11 +70,11 @@ void ParticleSystem::updateTrigo(){
 void ParticleSystem::draw(){
     ofMesh mesh;
     mesh.setMode( OF_PRIMITIVE_LINES );
-    ofMesh* pointer_mesh = &mesh;
+    ofMesh* pointerMesh = &mesh;
 
     for (int i=0; i<particles.size(); i++) {
         Particle* p = &particles.at(i);
-        addParticleToMesh(p, pointer_mesh);
+        addParticleToMesh(p, pointerMesh);
     }
     mesh.draw();
 }
